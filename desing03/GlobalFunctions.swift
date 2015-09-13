@@ -42,3 +42,9 @@ func ImageWithColor(color: UIColor, size: CGSize) -> UIImage {
     UIGraphicsEndImageContext()
     return image
 }
+
+
+
+
+
+

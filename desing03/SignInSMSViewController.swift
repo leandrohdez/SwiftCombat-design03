@@ -17,6 +17,7 @@ class SignInSMSViewController: UITableViewController {
     
     var countryCodeTextField    = UITextField()
     var phoneNumberTextField    = UITextField()
+    var smsCodeTextField        = UITextField()
     
     var flagWaitingForEnterCode = false
     
@@ -64,7 +65,6 @@ class SignInSMSViewController: UITableViewController {
         
         self.countryCodeTextField.becomeFirstResponder()
     }
-
     
     
     // MARK: - Table view data source
@@ -78,9 +78,10 @@ class SignInSMSViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
 
         if self.flagWaitingForEnterCode == false {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("reuseSignInIdentifier", forIndexPath: indexPath) as! UITableViewCell
             
             // I will use the "tag" property to avoid repeating the cell construction
             if cell.tag == 0 {
@@ -126,11 +127,19 @@ class SignInSMSViewController: UITableViewController {
                 
                 cell.tag = 1
             }
+            
+            return cell
         }
         else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("reuseEnterCodeIdentifier", forIndexPath: indexPath) as! UITableViewCell
+            
             // I will use the "tag" property to avoid repeating the cell construction
             if cell.tag == 0 {
-                cell.textLabel?.text = "Enter code"
+                self.smsCodeTextField = UITextField(frame: CGRectMake(10, 5, CGRectGetWidth(cell.frame)-20, CGRectGetHeight(cell.frame)-10))
+                self.smsCodeTextField.placeholder = "Code"
+                self.smsCodeTextField.textAlignment = NSTextAlignment.Center
+                self.smsCodeTextField.keyboardType = UIKeyboardType.NumberPad
+                cell.addSubview(self.smsCodeTextField)
             }
             
             // line separator
@@ -143,9 +152,9 @@ class SignInSMSViewController: UITableViewController {
             cell.addSubview(lineSeparator)
         
             cell.tag = 1
+            
+            return cell
         }
-        
-        return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -165,7 +174,7 @@ class SignInSMSViewController: UITableViewController {
     // para ver los iconos del status bar en blanco
     // el icono verde de la bateria solo se ve verde mientras este conectado el telefono cargando
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.Default;
+        return UIStatusBarStyle.Default
     }
 
     
@@ -178,8 +187,19 @@ class SignInSMSViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("nextAction"))
         
+        // new title
+        self.flipAnimateTitle("Your phone")
+        self.titleFooterLabel.text = "Enter your phone number to validate your account"
+        
         // reload view
         self.tableView.reloadData()
+        
+        let seconds = 0.4
+        let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            self.phoneNumberTextField.becomeFirstResponder()
+        })
     }
     
     func nextAction () {
@@ -190,10 +210,41 @@ class SignInSMSViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("backAction"))
         self.navigationItem.rightBarButtonItem = nil
         
+        // new title
+        self.flipAnimateTitle("Enter code")
+        self.titleFooterLabel.text = "Verification code sent"
+        
         // reload view
         self.tableView.reloadData()
+        
+        let seconds = 0.4
+        let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            self.smsCodeTextField.becomeFirstResponder()
+        })
+        
     }
 
+    
+    // Useful methods
+    func flipAnimateTitle(title: String) {
+        var layer:CALayer = self.titleHeaderLabel.layer
+        var rotationAndPerspectiveTransform: CATransform3D = CATransform3DIdentity
+        rotationAndPerspectiveTransform.m34 = 1.0 / -1000
+        
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, CGFloat(M_PI/2), CGFloat(1), CGFloat(0), CGFloat(0))
+        
+        layer.transform = rotationAndPerspectiveTransform
+        
+        self.titleHeaderLabel.text = title
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            layer.transform = CATransform3DIdentity
+        })
+    }
+    
+    
     /*
     // MARK: - Navigation
 

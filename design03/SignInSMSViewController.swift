@@ -9,7 +9,7 @@
 import UIKit
 
 
-class SignInSMSViewController: UITableViewController {
+class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
 
 
     var titleHeaderLabel    = UILabel()
@@ -106,11 +106,13 @@ class SignInSMSViewController: UITableViewController {
                     self.countryCodeTextField = UITextField(frame: CGRectMake(16, 5, 64, CGRectGetHeight(cell.frame)-10))
                     self.countryCodeTextField.placeholder = "+00"
                     self.countryCodeTextField.keyboardType = UIKeyboardType.NumberPad
+                    self.countryCodeTextField.delegate = self
                     cell.addSubview(self.countryCodeTextField)
                     
                     self.phoneNumberTextField = UITextField(frame: CGRectMake(CGRectGetMaxX(lineHorizontalSeparator.frame)+10, 5, CGRectGetWidth(cell.frame)-CGRectGetMaxX(lineHorizontalSeparator.frame)-20, CGRectGetHeight(cell.frame)-10))
                     self.phoneNumberTextField.placeholder = "Your phone number"
                     self.phoneNumberTextField.keyboardType = UIKeyboardType.NumberPad
+                    self.phoneNumberTextField.delegate = self
                     cell.addSubview(self.phoneNumberTextField)
                 }
                 
@@ -243,6 +245,128 @@ class SignInSMSViewController: UITableViewController {
             layer.transform = CATransform3DIdentity
         })
     }
+    
+    
+    // MARK: - TextFields Delegates & Formater
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        var newLength = (textField.text as NSString).length + (string as NSString).length - range.length
+        
+        var deleting: Bool = false
+        var char = string.cStringUsingEncoding(NSUTF8StringEncoding)
+        if (range.length==1 && (string as NSString).length == 0){
+            // then is backspace
+            deleting = true
+        }
+        
+        // Phone Number Field
+        if(textField == self.phoneNumberTextField){
+            if(newLength>15){
+                return false
+            }
+            textField.text = self.formatterPhoneNumber(textField.text as String, deleting: deleting) as String!
+            var willNumber = textField.text
+            if (deleting == true) {
+                willNumber = textField.text.substringToIndex(advance(textField.text.startIndex, (textField.text as NSString).length-1))
+            }
+            else{
+                willNumber = textField.text + string
+            }
+        }
+        
+        // Country Code Field
+        if (textField == self.countryCodeTextField){
+            if(newLength>4){
+                return false
+            }
+            textField.text = self.formatterCountryCode(textField.text, deleting: deleting) as String
+            var willNumber = textField.text
+            if (deleting == true) {
+                willNumber = textField.text.substringToIndex(advance(textField.text.startIndex, (textField.text as NSString).length-1))
+            }
+            else{
+                willNumber = textField.text + string
+            }
+        }
+        
+        return true
+    }
+    
+    
+    func formatterPhoneNumber(string: NSString, deleting: Bool) -> String {
+        var separatorFormatter: String = " "
+        
+        var realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
+        var len = realString.length
+        var resultString = string
+        
+        if(deleting == false){
+            if(len == 3 || len == 6 || len == 9 || len == 12) {
+                resultString = (string as String) + (separatorFormatter as String)
+            }
+        }
+        else{
+            // para cuando estoy borrando
+            var index = string.length - 2
+            var lastChar = ""
+            if (index > 0) {
+                lastChar = string.substringWithRange(NSMakeRange(index, 1))
+            }
+            
+            // si el ultimo caracter es un espacio lo borro
+            if(lastChar == separatorFormatter){
+                var string1 = string.substringToIndex(index+1)
+                resultString = string1
+            }
+            else{
+                resultString = string
+            }
+        }
+        
+        return resultString as String
+    }
+    
+    
+    func formatterCountryCode(string: NSString, deleting: Bool) -> String {
+        var separatorFormatter: String = "+"
+        
+        var realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
+        var len = realString.length
+        var resultString = string
+        
+        if(deleting == false){
+            if(len == 0) {
+                resultString = (string as String) + (separatorFormatter as String)
+            }
+        }
+        else{
+            // para cuando estoy borrando
+            var index = string.length - 2
+            var lastChar = ""
+            if (index > 0) {
+                lastChar = string.substringWithRange(NSMakeRange(index, 1))
+            }
+            
+            // si el ultimo caracter es un espacio lo borro
+            if(lastChar == separatorFormatter || realString.length == 1){
+                var string1 = string.substringToIndex(index+1)
+                resultString = string1
+            }
+            else{
+                resultString = string
+            }
+        }
+        
+        let delayInSeconds = 0.5
+        var dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)))
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+        })
+        
+        return resultString as String
+    }
+    
     
     
     /*

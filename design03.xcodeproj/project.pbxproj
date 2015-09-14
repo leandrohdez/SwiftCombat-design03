@@ -11,7 +11,7 @@
 		433DDDB61BA44F88001303DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 433DDDB41BA44F88001303DF /* Main.storyboard */; };
 		433DDDB81BA44F88001303DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433DDDB71BA44F88001303DF /* Images.xcassets */; };
 		433DDDBB1BA44F88001303DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433DDDB91BA44F88001303DF /* LaunchScreen.xib */; };
-		433DDDC71BA44F88001303DF /* desing03Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DDDC61BA44F88001303DF /* desing03Tests.swift */; };
+		433DDDC71BA44F88001303DF /* design03Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DDDC61BA44F88001303DF /* design03Tests.swift */; };
 		433DDDD11BA453DD001303DF /* SignInSMSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DDDD01BA453DD001303DF /* SignInSMSViewController.swift */; };
 		433DDDD31BA45468001303DF /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DDDD21BA45468001303DF /* GlobalFunctions.swift */; };
 		43B709DB1BA58237009E7DAE /* ListOfCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B709DA1BA58237009E7DAE /* ListOfCountryViewController.swift */; };
@@ -28,15 +28,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		433DDDAB1BA44F88001303DF /* desing03.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = desing03.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		433DDDAB1BA44F88001303DF /* design03.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = design03.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		433DDDAF1BA44F88001303DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		433DDDB01BA44F88001303DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		433DDDB51BA44F88001303DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		433DDDB71BA44F88001303DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		433DDDBA1BA44F88001303DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		433DDDC01BA44F88001303DF /* desing03Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = desing03Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		433DDDC01BA44F88001303DF /* design03Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = design03Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		433DDDC51BA44F88001303DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		433DDDC61BA44F88001303DF /* desing03Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = desing03Tests.swift; sourceTree = "<group>"; };
+		433DDDC61BA44F88001303DF /* design03Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = design03Tests.swift; sourceTree = "<group>"; };
 		433DDDD01BA453DD001303DF /* SignInSMSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInSMSViewController.swift; sourceTree = "<group>"; };
 		433DDDD21BA45468001303DF /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		43B709DA1BA58237009E7DAE /* ListOfCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOfCountryViewController.swift; sourceTree = "<group>"; };
@@ -63,8 +63,8 @@
 		433DDDA21BA44F88001303DF = {
 			isa = PBXGroup;
 			children = (
-				433DDDAD1BA44F88001303DF /* desing03 */,
-				433DDDC31BA44F88001303DF /* desing03Tests */,
+				433DDDAD1BA44F88001303DF /* design03 */,
+				433DDDC31BA44F88001303DF /* design03Tests */,
 				433DDDAC1BA44F88001303DF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,13 +72,13 @@
 		433DDDAC1BA44F88001303DF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				433DDDAB1BA44F88001303DF /* desing03.app */,
-				433DDDC01BA44F88001303DF /* desing03Tests.xctest */,
+				433DDDAB1BA44F88001303DF /* design03.app */,
+				433DDDC01BA44F88001303DF /* design03Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		433DDDAD1BA44F88001303DF /* desing03 */ = {
+		433DDDAD1BA44F88001303DF /* design03 */ = {
 			isa = PBXGroup;
 			children = (
 				433DDDD21BA45468001303DF /* GlobalFunctions.swift */,
@@ -90,7 +90,7 @@
 				433DDDB91BA44F88001303DF /* LaunchScreen.xib */,
 				433DDDAE1BA44F88001303DF /* Supporting Files */,
 			);
-			path = desing03;
+			path = design03;
 			sourceTree = "<group>";
 		};
 		433DDDAE1BA44F88001303DF /* Supporting Files */ = {
@@ -101,13 +101,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		433DDDC31BA44F88001303DF /* desing03Tests */ = {
+		433DDDC31BA44F88001303DF /* design03Tests */ = {
 			isa = PBXGroup;
 			children = (
-				433DDDC61BA44F88001303DF /* desing03Tests.swift */,
+				433DDDC61BA44F88001303DF /* design03Tests.swift */,
 				433DDDC41BA44F88001303DF /* Supporting Files */,
 			);
-			path = desing03Tests;
+			path = design03Tests;
 			sourceTree = "<group>";
 		};
 		433DDDC41BA44F88001303DF /* Supporting Files */ = {
@@ -121,9 +121,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		433DDDAA1BA44F88001303DF /* desing03 */ = {
+		433DDDAA1BA44F88001303DF /* design03 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 433DDDCA1BA44F88001303DF /* Build configuration list for PBXNativeTarget "desing03" */;
+			buildConfigurationList = 433DDDCA1BA44F88001303DF /* Build configuration list for PBXNativeTarget "design03" */;
 			buildPhases = (
 				433DDDA71BA44F88001303DF /* Sources */,
 				433DDDA81BA44F88001303DF /* Frameworks */,
@@ -133,14 +133,14 @@
 			);
 			dependencies = (
 			);
-			name = desing03;
+			name = design03;
 			productName = desing03;
-			productReference = 433DDDAB1BA44F88001303DF /* desing03.app */;
+			productReference = 433DDDAB1BA44F88001303DF /* design03.app */;
 			productType = "com.apple.product-type.application";
 		};
-		433DDDBF1BA44F88001303DF /* desing03Tests */ = {
+		433DDDBF1BA44F88001303DF /* design03Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 433DDDCD1BA44F88001303DF /* Build configuration list for PBXNativeTarget "desing03Tests" */;
+			buildConfigurationList = 433DDDCD1BA44F88001303DF /* Build configuration list for PBXNativeTarget "design03Tests" */;
 			buildPhases = (
 				433DDDBC1BA44F88001303DF /* Sources */,
 				433DDDBD1BA44F88001303DF /* Frameworks */,
@@ -151,9 +151,9 @@
 			dependencies = (
 				433DDDC21BA44F88001303DF /* PBXTargetDependency */,
 			);
-			name = desing03Tests;
+			name = design03Tests;
 			productName = desing03Tests;
-			productReference = 433DDDC01BA44F88001303DF /* desing03Tests.xctest */;
+			productReference = 433DDDC01BA44F88001303DF /* design03Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -174,7 +174,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 433DDDA61BA44F88001303DF /* Build configuration list for PBXProject "desing03" */;
+			buildConfigurationList = 433DDDA61BA44F88001303DF /* Build configuration list for PBXProject "design03" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -187,8 +187,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				433DDDAA1BA44F88001303DF /* desing03 */,
-				433DDDBF1BA44F88001303DF /* desing03Tests */,
+				433DDDAA1BA44F88001303DF /* design03 */,
+				433DDDBF1BA44F88001303DF /* design03Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -229,7 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				433DDDC71BA44F88001303DF /* desing03Tests.swift in Sources */,
+				433DDDC71BA44F88001303DF /* design03Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +238,7 @@
 /* Begin PBXTargetDependency section */
 		433DDDC21BA44F88001303DF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 433DDDAA1BA44F88001303DF /* desing03 */;
+			target = 433DDDAA1BA44F88001303DF /* design03 */;
 			targetProxy = 433DDDC11BA44F88001303DF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -348,11 +348,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = desing03/Info.plist;
+				INFOPLIST_FILE = design03/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = design03;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -361,11 +361,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = desing03/Info.plist;
+				INFOPLIST_FILE = design03/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = design03;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -384,7 +384,7 @@
 				);
 				INFOPLIST_FILE = desing03Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = design03Tests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/desing03.app/desing03";
 			};
 			name = Debug;
@@ -399,7 +399,7 @@
 				);
 				INFOPLIST_FILE = desing03Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = design03Tests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/desing03.app/desing03";
 			};
 			name = Release;
@@ -407,7 +407,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		433DDDA61BA44F88001303DF /* Build configuration list for PBXProject "desing03" */ = {
+		433DDDA61BA44F88001303DF /* Build configuration list for PBXProject "design03" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				433DDDC81BA44F88001303DF /* Debug */,
@@ -416,7 +416,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		433DDDCA1BA44F88001303DF /* Build configuration list for PBXNativeTarget "desing03" */ = {
+		433DDDCA1BA44F88001303DF /* Build configuration list for PBXNativeTarget "design03" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				433DDDCB1BA44F88001303DF /* Debug */,
@@ -425,7 +425,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		433DDDCD1BA44F88001303DF /* Build configuration list for PBXNativeTarget "desing03Tests" */ = {
+		433DDDCD1BA44F88001303DF /* Build configuration list for PBXNativeTarget "design03Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				433DDDCE1BA44F88001303DF /* Debug */,

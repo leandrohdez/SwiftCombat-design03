@@ -21,6 +21,9 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     
     var flagWaitingForEnterCode = false
     
+    // data
+    var countrySelected: NSDictionary? = nil
+    
     
     // MARK: - View Load
     override func viewDidLoad() {
@@ -33,7 +36,8 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.shadowImage = ImageWithColor(UIColorFromRGB(0xebb400))
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.setBackgroundImage(ImageWithColor(UIColorFromRGB(0xebb400)), forBarMetrics: UIBarMetrics.Default)
-       
+       self.navigationController?.navigationBar.translucent = false
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("nextAction"))
         
         // configura tableview
@@ -63,7 +67,12 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.countryCodeTextField.becomeFirstResponder()
+        if self.countryCodeTextField.text == "" {
+            self.countryCodeTextField.becomeFirstResponder()
+        }
+        else {
+            self.phoneNumberTextField.becomeFirstResponder()
+        }
     }
     
     
@@ -89,10 +98,8 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
                 if indexPath.row == 0 {
                     // line separator in the first cell
                     cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-                    
-                    cell.textLabel!.text = "China"
                 }
-                
+            
                 if indexPath.row == 1 {
                     // selection cell
                     cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -128,6 +135,15 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
                 }
                 
                 cell.tag = 1
+            }
+            
+            // always exec
+            if indexPath.row == 0 {
+                cell.textLabel!.text = (self.countrySelected != nil) ? self.countrySelected!.valueForKey("name") as! String : ""
+            }
+            if indexPath.row == 1 {
+                var code = (self.countrySelected != nil) ? self.countrySelected!.valueForKey("code") as! String : ""
+                self.countryCodeTextField.text = (code != "") ? "+\(code)" : ""
             }
             
             return cell
@@ -369,15 +385,22 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     
     
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueListOfCountIdentifier" {
+            
+            // BLOCK
+            let controller = segue.destinationViewController as! ListOfCountryViewController
+            controller.didSelect = { (index: NSDictionary) -> Void in
+                self.countrySelected = index
+                self.tableView.reloadData()
+            }
+        }
     }
-    */
+    
     
     
     

@@ -14,7 +14,7 @@
 		433DDDC71BA44F88001303DF /* design03Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DDDC61BA44F88001303DF /* design03Tests.swift */; };
 		433DDDD11BA453DD001303DF /* SignInSMSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DDDD01BA453DD001303DF /* SignInSMSViewController.swift */; };
 		433DDDD31BA45468001303DF /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DDDD21BA45468001303DF /* GlobalFunctions.swift */; };
-		43B709DB1BA58237009E7DAE /* ListOfCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B709DA1BA58237009E7DAE /* ListOfCountryViewController.swift */; };
+		C46C2D101BA71FDF00DB0628 /* ListOfCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C2D0F1BA71FDF00DB0628 /* ListOfCountryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,7 @@
 		433DDDC61BA44F88001303DF /* design03Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = design03Tests.swift; sourceTree = "<group>"; };
 		433DDDD01BA453DD001303DF /* SignInSMSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInSMSViewController.swift; sourceTree = "<group>"; };
 		433DDDD21BA45468001303DF /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
-		43B709DA1BA58237009E7DAE /* ListOfCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOfCountryViewController.swift; sourceTree = "<group>"; };
+		C46C2D0F1BA71FDF00DB0628 /* ListOfCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOfCountryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 				433DDDD21BA45468001303DF /* GlobalFunctions.swift */,
 				433DDDB01BA44F88001303DF /* AppDelegate.swift */,
 				433DDDD01BA453DD001303DF /* SignInSMSViewController.swift */,
-				43B709DA1BA58237009E7DAE /* ListOfCountryViewController.swift */,
+				C46C2D0F1BA71FDF00DB0628 /* ListOfCountryViewController.swift */,
 				433DDDB41BA44F88001303DF /* Main.storyboard */,
 				433DDDB71BA44F88001303DF /* Images.xcassets */,
 				433DDDB91BA44F88001303DF /* LaunchScreen.xib */,
@@ -167,6 +167,7 @@
 				TargetAttributes = {
 					433DDDAA1BA44F88001303DF = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = M44266746X;
 					};
 					433DDDBF1BA44F88001303DF = {
 						CreatedOnToolsVersion = 6.4;
@@ -218,7 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43B709DB1BA58237009E7DAE /* ListOfCountryViewController.swift in Sources */,
+				C46C2D101BA71FDF00DB0628 /* ListOfCountryViewController.swift in Sources */,
 				433DDDD11BA453DD001303DF /* SignInSMSViewController.swift in Sources */,
 				433DDDB11BA44F88001303DF /* AppDelegate.swift in Sources */,
 				433DDDD31BA45468001303DF /* GlobalFunctions.swift in Sources */,
@@ -348,7 +349,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = design03/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -361,7 +362,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = design03/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

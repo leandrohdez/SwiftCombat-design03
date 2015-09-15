@@ -203,7 +203,6 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         
         // botones en la barra
         self.navigationItem.leftBarButtonItem = nil
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("nextAction"))
         
         // new title
         self.flipAnimateTitle("Your phone")
@@ -221,27 +220,30 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func nextAction () {
-        // update flag
-        self.flagWaitingForEnterCode = true
-        
-        // botones en la barra
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("backAction"))
-        self.navigationItem.rightBarButtonItem = nil
-        
-        // new title
-        self.flipAnimateTitle("Enter code")
-        self.titleFooterLabel.text = "Verification code sent"
-        
-        // reload view
-        self.tableView.reloadData()
-        
-        let seconds = 0.4
-        let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-            self.smsCodeTextField.becomeFirstResponder()
-        })
-        
+        if self.flagWaitingForEnterCode == false {
+            // update flag
+            self.flagWaitingForEnterCode = true
+            
+            // botones en la barra
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("backAction"))
+            
+            // new title
+            self.flipAnimateTitle("Enter code")
+            self.titleFooterLabel.text = "Verification code sent"
+            
+            // reload view
+            self.tableView.reloadData()
+            
+            // limpio el campo code
+            self.smsCodeTextField.text = ""
+            
+            let seconds = 0.4
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                self.smsCodeTextField.becomeFirstResponder()
+            })
+        }
     }
 
     
@@ -266,8 +268,11 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - TextFields Delegates & Formater
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
+        var performChange = true
+        
         var newLength = (textField.text as NSString).length + (string as NSString).length - range.length
         
+        // determina si se esta borrando
         var deleting: Bool = false
         var char = string.cStringUsingEncoding(NSUTF8StringEncoding)
         if (range.length==1 && (string as NSString).length == 0){
@@ -277,47 +282,35 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         
         // Phone Number Field
         if(textField == self.phoneNumberTextField){
-            if(newLength>15){
-                return false
-            }
-            textField.text = self.formatterPhoneNumber(textField.text as String, deleting: deleting) as String!
-            var willNumber = textField.text
-            if (deleting == true) {
-                willNumber = textField.text.substringToIndex(advance(textField.text.startIndex, (textField.text as NSString).length-1))
-            }
-            else{
-                willNumber = textField.text + string
-            }
+            performChange = self.formatterPhoneNumber(textField, range: range, deleting: deleting) as Bool
         }
         
         // Country Code Field
         if (textField == self.countryCodeTextField){
-            if(newLength>4){
-                return false
-            }
-            textField.text = self.formatterCountryCode(textField.text, deleting: deleting) as String
-            var willNumber = textField.text
-            if (deleting == true) {
-                willNumber = textField.text.substringToIndex(advance(textField.text.startIndex, (textField.text as NSString).length-1))
-            }
-            else{
-                willNumber = textField.text + string
-            }
+            performChange = self.formatterCountryCode(textField, range: range, deleting: deleting) as Bool
         }
         
-        return true
+        return performChange
     }
     
     
-    func formatterPhoneNumber(string: NSString, deleting: Bool) -> String {
+    func formatterPhoneNumber(textField: UITextField, range: NSRange, deleting: Bool) -> Bool {
+        
+        var performChange = true
+        
         var separatorFormatter: String = " "
+        var string: NSString = textField.text
         
         var realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
         var len = realString.length
         var resultString = string
         
         if(deleting == false){
-            if(len == 3 || len == 6 || len == 9 || len == 12) {
+            // muy largo
+            if (string.length > 14) {
+                performChange = false
+            }
+            else if(len == 3 || len == 6 || len == 9 || len == 12) {
                 resultString = (string as String) + (separatorFormatter as String)
             }
         }
@@ -334,17 +327,27 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
                 var string1 = string.substringToIndex(index+1)
                 resultString = string1
             }
+            else if (range.location != index+1) {
+                resultString = string.substringToIndex(string.length-1)
+                performChange = false
+            }
             else{
                 resultString = string
             }
         }
         
-        return resultString as String
+        textField.text = resultString as String
+        
+        return performChange
     }
     
     
-    func formatterCountryCode(string: NSString, deleting: Bool) -> String {
+    func formatterCountryCode(textField: UITextField, range: NSRange, deleting: Bool) -> Bool {
+        
+        var performChange = true
+        
         var separatorFormatter: String = "+"
+        var string: NSString = textField.text
         
         var realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
         var len = realString.length
@@ -353,6 +356,10 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         if(deleting == false){
             if(len == 0) {
                 resultString = (string as String) + (separatorFormatter as String)
+            }
+            // muy largo
+            if (string.length > 3) {
+                performChange = false
             }
         }
         else{
@@ -363,15 +370,23 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
                 lastChar = string.substringWithRange(NSMakeRange(index, 1))
             }
             
-            // si el ultimo caracter es un espacio lo borro
+            var stringWillBeDeleted = string.substringWithRange(range)
+            
+            // si el ultimo caracter es un + lo borro
             if(lastChar == separatorFormatter || realString.length == 1){
                 var string1 = string.substringToIndex(index+1)
                 resultString = string1
+            }
+            else if (stringWillBeDeleted == separatorFormatter) {
+                resultString = string
+                performChange = false
             }
             else{
                 resultString = string
             }
         }
+        
+        textField.text = resultString as String
         
         let delayInSeconds = 0.5
         var dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)))
@@ -380,7 +395,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
         })
         
-        return resultString as String
+        return performChange
     }
     
     

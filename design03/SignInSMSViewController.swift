@@ -139,7 +139,14 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
             
             // always exec
             if indexPath.row == 0 {
-                cell.textLabel!.text = (self.countrySelected != nil) ? self.countrySelected!.valueForKey("name") as! String : ""
+                if self.countrySelected != nil {
+                    cell.textLabel!.text = self.countrySelected!.valueForKey("name") as? String
+                    cell.textLabel!.textColor = UIColorFromRGB(0x292929)
+                }
+                else {
+                    cell.textLabel!.text = "Select country"
+                    cell.textLabel!.textColor = UIColor.lightGrayColor()
+                }
             }
             if indexPath.row == 1 {
                 var code = (self.countrySelected != nil) ? self.countrySelected!.valueForKey("code") as! String : ""
@@ -221,6 +228,13 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     
     func nextAction () {
         if self.flagWaitingForEnterCode == false {
+            
+            if self.isValidPhone() == false || self.countryCodeTextField.text == "" || self.phoneNumberTextField.text == "" {
+                NSLog("Phone number invalid !")
+                UIAlertView(title: "Sorry", message: "This phone is invalid. Please enter a valid phone.", delegate: self, cancelButtonTitle: "Accept").show()
+                return
+            }
+            
             // update flag
             self.flagWaitingForEnterCode = true
             
@@ -229,7 +243,12 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
             
             // new title
             self.flipAnimateTitle("Enter code")
-            self.titleFooterLabel.text = "Verification code sent"
+            
+            var unformatString: NSString = "Verification code sent  Sent again"
+            var formatString = NSMutableAttributedString(string: unformatString as String)
+            formatString.addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.StyleSingle.rawValue, range: NSMakeRange(24, 10))
+            formatString.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(0x82ba52), range: NSMakeRange(24, 10))
+            self.titleFooterLabel.attributedText = formatString
             
             // reload view
             self.tableView.reloadData()
@@ -391,6 +410,12 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         let delayInSeconds = 0.5
         var dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            
+            // capturo el codigo introducido por el usuario
+            var code = (textField.text as NSString).stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
+            self.countrySelected = getCountry(code as String)
+            
+            // recargo la celda que muestra el nombre del usuario
             var indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
         })
@@ -399,6 +424,45 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     }
     
     
+    // MARK: - 
+    func isValidPhone() -> Bool {
+        var phoneUtil = NBPhoneNumberUtil()
+        
+        var countrycode = (self.countryCodeTextField.text as NSString).stringByReplacingOccurrencesOfString("+", withString: "")
+        var numberphone = (self.phoneNumberTextField.text as NSString).stringByReplacingOccurrencesOfString(" ", withString: "")
+        
+        var candidate = "+\(countrycode)\(numberphone)"
+        
+        var error: NSError? = nil
+        var result = false
+        
+        // validating countrycode
+        // ademas comprueba de que lo que este pasando por countrycode
+        // sea igual al countrycode que deduce la libreria a partir el full phone number
+        // (telefono completo concatenado con el country code pero sin el + delante)
+        var possibleCountryCode = phoneUtil.extractCountryCode(candidate, nationalNumber: nil)
+        // tambien limpio el countrycode (le quito el +)
+        var stringCountryCode = ("\(possibleCountryCode)" as NSString).stringByReplacingOccurrencesOfString("+", withString: "")
+        if stringCountryCode != countrycode {
+            return false
+        }
+        
+        // validating full number
+        var nbnumber: NBPhoneNumber = phoneUtil.parseAndKeepRawInput(candidate, defaultRegion: "ES", error: &error)
+        if error == nil {
+            result = phoneUtil.isValidNumber(nbnumber)
+            
+            if result == true {
+                var type: NBEPhoneNumberType = phoneUtil.getNumberType(nbnumber)
+                
+                if type.value == NBEPhoneNumberTypeMOBILE.value || type.value == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE.value || type.value == NBEPhoneNumberTypePERSONAL_NUMBER.value {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
     
     
     // MARK: - Navigation

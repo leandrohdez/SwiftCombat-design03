@@ -256,16 +256,17 @@ func getCountryDictionaryArray() -> NSArray {
     return NSArray(array: countryArray)
 }
 
-func getCountryName(region: String) -> String {
+func getCountry(code: String) -> NSDictionary? {
     var countryArray = getCountryDictionaryArray()
     
     for dictCountry in countryArray {
-        if dictCountry.valueForKey("region") as! String == region {
-            return dictCountry.valueForKey("name") as! String
+        if dictCountry.valueForKey("code") as! String == code {
+            return dictCountry as? NSDictionary
         }
     }
-    return ""
+    return nil
 }
+
 
 
 

@@ -35,18 +35,18 @@ class ListOfCountryViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) 
 
-        var item: NSDictionary = self.countryList.objectAtIndex(indexPath.row) as! NSDictionary
+        let item: NSDictionary = self.countryList.objectAtIndex(indexPath.row) as! NSDictionary
         
         // name of country
         cell.textLabel!.text = item.valueForKey("name") as? String
         
         // code of country
-        var code = item.valueForKey("code") as! String
+        let code = item.valueForKey("code") as! String
         
         // iso region
-        var region = item.valueForKey("region") as! String
+        let region = item.valueForKey("region") as! String
         
         
         cell.detailTextLabel!.text = "+(\(code)) - \(region)"
@@ -57,7 +57,7 @@ class ListOfCountryViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        var item: NSDictionary = self.countryList.objectAtIndex(indexPath.row) as! NSDictionary
+        let item: NSDictionary = self.countryList.objectAtIndex(indexPath.row) as! NSDictionary
         self.didSelect!(index: item)
         
         self.navigationController?.popToRootViewControllerAnimated(true)

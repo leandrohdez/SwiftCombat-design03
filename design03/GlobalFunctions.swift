@@ -45,7 +45,7 @@ func ImageWithColor(color: UIColor, size: CGSize) -> UIImage {
 
 
 func getCountryDictionaryArray() -> NSArray {
-    var countryArray = NSMutableArray()
+    let countryArray = NSMutableArray()
     
     countryArray.addObject(["name" : "Estados Unidos", "region" : "US", "code" : "1"])
     countryArray.addObject(["name" : "Rusia", "region" : "RU", "code" : "7"])
@@ -257,7 +257,7 @@ func getCountryDictionaryArray() -> NSArray {
 }
 
 func getCountry(code: String) -> NSDictionary? {
-    var countryArray = getCountryDictionaryArray()
+    let countryArray = getCountryDictionaryArray()
     
     for dictCountry in countryArray {
         if dictCountry.valueForKey("code") as! String == code {

@@ -90,7 +90,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
 
         if self.flagWaitingForEnterCode == false {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("reuseSignInIdentifier", forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("reuseSignInIdentifier", forIndexPath: indexPath) 
             
             // I will use the "tag" property to avoid repeating the cell construction
             if cell.tag == 0 {
@@ -106,7 +106,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
                     
                     // custom cell
                     // horizontal line separator
-                    var lineHorizontalSeparator = UIImageView(frame: CGRectMake(90, 0, 1, CGRectGetHeight(cell.frame)))
+                    let lineHorizontalSeparator = UIImageView(frame: CGRectMake(90, 0, 1, CGRectGetHeight(cell.frame)))
                     lineHorizontalSeparator.image = ImageWithColor(UIColorFromRGB(0xeaeaea))
                     cell.addSubview(lineHorizontalSeparator)
                     
@@ -149,14 +149,14 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
                 }
             }
             if indexPath.row == 1 {
-                var code = (self.countrySelected != nil) ? self.countrySelected!.valueForKey("code") as! String : ""
+                let code = (self.countrySelected != nil) ? self.countrySelected!.valueForKey("code") as! String : ""
                 self.countryCodeTextField.text = (code != "") ? "+\(code)" : ""
             }
             
             return cell
         }
         else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("reuseEnterCodeIdentifier", forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("reuseEnterCodeIdentifier", forIndexPath: indexPath) 
             
             // I will use the "tag" property to avoid repeating the cell construction
             if cell.tag == 0 {
@@ -220,7 +220,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         
         let seconds = 0.4
         let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
             self.phoneNumberTextField.becomeFirstResponder()
         })
@@ -244,8 +244,8 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
             // new title
             self.flipAnimateTitle("Enter code")
             
-            var unformatString: NSString = "Verification code sent  Sent again"
-            var formatString = NSMutableAttributedString(string: unformatString as String)
+            let unformatString: NSString = "Verification code sent  Sent again"
+            let formatString = NSMutableAttributedString(string: unformatString as String)
             formatString.addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.StyleSingle.rawValue, range: NSMakeRange(24, 10))
             formatString.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(0x82ba52), range: NSMakeRange(24, 10))
             self.titleFooterLabel.attributedText = formatString
@@ -258,7 +258,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
             
             let seconds = 0.4
             let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-            var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
             dispatch_after(dispatchTime, dispatch_get_main_queue(), {
                 self.smsCodeTextField.becomeFirstResponder()
             })
@@ -268,7 +268,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     
     // Useful methods
     func flipAnimateTitle(title: String) {
-        var layer:CALayer = self.titleHeaderLabel.layer
+        let layer:CALayer = self.titleHeaderLabel.layer
         var rotationAndPerspectiveTransform: CATransform3D = CATransform3DIdentity
         rotationAndPerspectiveTransform.m34 = 1.0 / -1000
         
@@ -289,12 +289,9 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         
         var performChange = true
         
-        var newLength = (textField.text as NSString).length + (string as NSString).length - range.length
-        
         // determina si se esta borrando
         var deleting: Bool = false
-        var char = string.cStringUsingEncoding(NSUTF8StringEncoding)
-        if (range.length==1 && (string as NSString).length == 0){
+        if (range.length==1 && string.characters.count == 0){
             // then is backspace
             deleting = true
         }
@@ -317,11 +314,11 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         
         var performChange = true
         
-        var separatorFormatter: String = " "
-        var string: NSString = textField.text
+        let separatorFormatter: String = " "
+        let string: NSString = textField.text!
         
-        var realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
-        var len = realString.length
+        let realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
+        let len = realString.length
         var resultString = string
         
         if(deleting == false){
@@ -335,7 +332,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         }
         else{
             // para cuando estoy borrando
-            var index = string.length - 2
+            let index = string.length - 2
             var lastChar = ""
             if (index > 0) {
                 lastChar = string.substringWithRange(NSMakeRange(index, 1))
@@ -343,7 +340,7 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
             
             // si el ultimo caracter es un espacio lo borro
             if(lastChar == separatorFormatter){
-                var string1 = string.substringToIndex(index+1)
+                let string1 = string.substringToIndex(index+1)
                 resultString = string1
             }
             else if (range.location != index+1) {
@@ -365,11 +362,11 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         
         var performChange = true
         
-        var separatorFormatter: String = "+"
-        var string: NSString = textField.text
+        let separatorFormatter: String = "+"
+        let string: NSString = textField.text!
         
-        var realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
-        var len = realString.length
+        let realString: NSString = string.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
+        let len = realString.length
         var resultString = string
         
         if(deleting == false){
@@ -383,17 +380,17 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         }
         else{
             // para cuando estoy borrando
-            var index = string.length - 2
+            let index = string.length - 2
             var lastChar = ""
             if (index > 0) {
                 lastChar = string.substringWithRange(NSMakeRange(index, 1))
             }
             
-            var stringWillBeDeleted = string.substringWithRange(range)
+            let stringWillBeDeleted = string.substringWithRange(range)
             
             // si el ultimo caracter es un + lo borro
             if(lastChar == separatorFormatter || realString.length == 1){
-                var string1 = string.substringToIndex(index+1)
+                let string1 = string.substringToIndex(index+1)
                 resultString = string1
             }
             else if (stringWillBeDeleted == separatorFormatter) {
@@ -408,15 +405,15 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         textField.text = resultString as String
         
         let delayInSeconds = 0.5
-        var dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)))
+        let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
             
             // capturo el codigo introducido por el usuario
-            var code = (textField.text as NSString).stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
+            let code = textField.text!.stringByReplacingOccurrencesOfString(separatorFormatter as String, withString: "")
             self.countrySelected = getCountry(code as String)
             
             // recargo la celda que muestra el nombre del usuario
-            var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
         })
         
@@ -426,12 +423,12 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
     
     // MARK: - 
     func isValidPhone() -> Bool {
-        var phoneUtil = NBPhoneNumberUtil()
+        let phoneUtil = NBPhoneNumberUtil()
         
-        var countrycode = (self.countryCodeTextField.text as NSString).stringByReplacingOccurrencesOfString("+", withString: "")
-        var numberphone = (self.phoneNumberTextField.text as NSString).stringByReplacingOccurrencesOfString(" ", withString: "")
+        let countrycode = self.countryCodeTextField.text!.stringByReplacingOccurrencesOfString("+", withString: "")
+        let numberphone = self.phoneNumberTextField.text!.stringByReplacingOccurrencesOfString(" ", withString: "")
         
-        var candidate = "+\(countrycode)\(numberphone)"
+        let candidate = "+\(countrycode)\(numberphone)"
         
         var error: NSError? = nil
         var result = false
@@ -440,22 +437,28 @@ class SignInSMSViewController: UITableViewController, UITextFieldDelegate {
         // ademas comprueba de que lo que este pasando por countrycode
         // sea igual al countrycode que deduce la libreria a partir el full phone number
         // (telefono completo concatenado con el country code pero sin el + delante)
-        var possibleCountryCode = phoneUtil.extractCountryCode(candidate, nationalNumber: nil)
+        let possibleCountryCode = phoneUtil.extractCountryCode(candidate, nationalNumber: nil)
         // tambien limpio el countrycode (le quito el +)
-        var stringCountryCode = ("\(possibleCountryCode)" as NSString).stringByReplacingOccurrencesOfString("+", withString: "")
+        let stringCountryCode = ("\(possibleCountryCode)" as NSString).stringByReplacingOccurrencesOfString("+", withString: "")
         if stringCountryCode != countrycode {
             return false
         }
         
         // validating full number
-        var nbnumber: NBPhoneNumber = phoneUtil.parseAndKeepRawInput(candidate, defaultRegion: "ES", error: &error)
+        var nbnumber: NBPhoneNumber
+        do {
+            nbnumber = try phoneUtil.parseAndKeepRawInput(candidate, defaultRegion: "ES")
+        } catch let error1 as NSError {
+            error = error1
+            nbnumber = NBPhoneNumber()
+        }
         if error == nil {
             result = phoneUtil.isValidNumber(nbnumber)
             
             if result == true {
-                var type: NBEPhoneNumberType = phoneUtil.getNumberType(nbnumber)
+                let type: NBEPhoneNumberType = phoneUtil.getNumberType(nbnumber)
                 
-                if type.value == NBEPhoneNumberTypeMOBILE.value || type.value == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE.value || type.value == NBEPhoneNumberTypePERSONAL_NUMBER.value {
+                if type.rawValue == NBEPhoneNumberTypeMOBILE.rawValue || type.rawValue == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE.rawValue || type.rawValue == NBEPhoneNumberTypePERSONAL_NUMBER.rawValue {
                     return true
                 }
             }
